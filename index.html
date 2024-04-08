@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="container">
+    <div class="card"> <!-- Added card container -->
+        <input placeholder="Aidutornyi" class="input" type="number" id="audi"><br>
+        <input placeholder="Modul 1" class="input" type="number" id="rk1"><br>
+        <input placeholder="Modul 2" class="input" type="number" id="rk2"><br>
+        <input placeholder="Emtihan" class="input" type="number" id="emtihan"><br>
+        <input placeholder="Qalagan baga" class="input" type="number" id="qalau" style="margin-bottom: 20px;"><br>
+        <button onclick="calculate()" class="button">
+            <span class="shadow"></span>
+            <span class="edge"></span>
+            <span class="front text">Calculate</span>
+        </button>
+    </div>
+    <textarea id="result" readonly></textarea>
+</div>
+
+<script>
+    function calculate() {
+        var audi = parseFloat(document.getElementById("audi").value);
+        var rk1 = parseInt(document.getElementById("rk1").value);
+        var rk2 = parseInt(document.getElementById("rk2").value);
+        var emtihan = parseInt(document.getElementById("emtihan").value);
+        var qalau = parseInt(document.getElementById("qalau").value);
+        var resultTextArea = document.getElementById("result");
+        resultTextArea.value = "";
+
+        if (audi > 0 && rk1 > 0 && rk2 > 0 && emtihan === 0) {
+            for (var i = 50; i <= 100; i += 2) {
+                if (audi * 0.4 + ((rk1 + rk2) / 2) * 0.2 + i * 0.4 >= qalau) {
+                    resultTextArea.value += "Sessiadan " + i + " alu kereksin\n";
+                }
+            }
+        } else if (audi > 0 && rk1 > 0 && rk2 === 0 && emtihan === 0) {
+            var rk2_1 = [];
+            for (var ii = 50; ii <= 100; ii += 5) {
+                rk2_1.push(ii);
+            }
+            var sess_1 = [];
+            for (var iii = 50; iii <= 100; iii += 2) {
+                sess_1.push(iii);
+            }
+            for (var i = 0; i < sess_1.length; i++) {
+                for (var ii = 0; ii < rk2_1.length; ii++) {
+                    if (audi * 0.4 + ((rk1 + rk2_1[ii]) / 2) * 0.2 + sess_1[i] * 0.4 >= qalau) {
+                        resultTextArea.value += "2shi modul " + rk2_1[ii] + " sessiya " + sess_1[i] + " alu kereksin\n";
+                    }
+                }
+            }
+        } else if (audi > 0 && rk1 === 0 && rk2 === 0 && emtihan === 0) {
+            var rk2_1 = [];
+            for (var ii = 50; ii <= 100; ii += 5) {
+                rk2_1.push(ii);
+            }
+            var sess_1 = [];
+            for (var iii = 50; iii <= 100; iii += 2) {
+                sess_1.push(iii);
+            }
+            for (var i = 0; i < sess_1.length; i++) {
+                for (var ii = 0; ii < rk2_1.length; ii++) {
+                    for (var iii = 0; iii < rk2_1.length; iii++) {
+                        if (audi * 0.4 + ((rk2_1[iii] + rk2_1[ii]) / 2) * 0.2 + sess_1[i] * 0.4 >= qalau) {
+                            resultTextArea.value += "1shi modul " + rk2_1[iii] + " 2shi modul " + rk2_1[ii] + " sessiya " + sess_1[i] + " alu kereksin\n";
+                        }
+                    }
+                }
+            }
+        } else {
+            resultTextArea.value = audi * 0.4 + ((rk1 + rk2) / 2) * 0.2 + emtihan * 0.4;
+        }
+    }
+</script>
+
+</body>
+</html>
